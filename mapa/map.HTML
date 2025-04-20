@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>自定义图标标记</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map {
+      width: 100%;
+      height: 800px;
+    }
+    .custom-icon {
+      opacity: 0.5;
+      transition: opacity 0.3s;
+    }
+    .custom-icon:hover {
+      opacity: 1.0;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    // 创建地图并设定中心为上海
+    var map = L.map('map').setView([31.2304, 121.4737], 6);
+
+    // 加载地图瓦片
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // 创建两个图标
+    var iconLv1 = L.icon({
+      iconUrl: './lv1.png',
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32],
+      className: 'custom-icon'
+    });
+
+    var iconLv2 = L.icon({
+      iconUrl: './lv2.png',
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32],
+      className: 'custom-icon'
+    });
+
+    // 添加 lv2 图标标记（山东、湖南）
+    L.marker([36.6683, 117.0204], { icon: iconLv2 }).addTo(map)
+      .bindPopup('测试'); // 山东济南
+    L.marker([28.1125, 112.9834], { icon: iconLv2 }).addTo(map)
+      .bindPopup('测试'); // 湖南长沙
+
+    // 添加 lv1 图标标记（安徽、长沙）
+    L.marker([31.8612, 117.2857], { icon: iconLv1 }).addTo(map)
+      .bindPopup('调整'); // 安徽合肥
+    L.marker([28.2282, 112.9388], { icon: iconLv1 }).addTo(map)
+      .bindPopup('调整'); // 长沙
+  </script>
+</body>
+</html>
